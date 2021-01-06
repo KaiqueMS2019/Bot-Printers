@@ -1,0 +1,48 @@
+.printer{
+    width: calc(100% - 20px);
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color:#fff;
+    line-height: 50px;
+    box-sizing: border-box;
+    padding: 2px;
+}
+
+.printer .name{
+    float: left;
+    width: calc(100% - 100px);
+    overflow: hidden;
+    background-color: #fff;
+    box-sizing: border-box;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.printer .icon{
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    background-image: url('../../../assets/icons/printer.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.printer .button{
+    float: right;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    background-image: url('../../../assets/icons/down-arrow.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.printer .button.ready{
+    background-image: url('../../../assets/icons/ready-down-arrow.svg') !important;
+}

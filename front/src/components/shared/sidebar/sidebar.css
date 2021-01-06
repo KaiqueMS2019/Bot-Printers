@@ -1,0 +1,10 @@
+#sidebar{
+    float: left;
+    width: 300px;
+    height: calc(100vh - 50px);
+    background-color:#364250;
+    color:ivory;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 5px;
+}
