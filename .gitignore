@@ -1,3 +1,6 @@
 front/node_modules/
 front/.eslintcache
 front/yarn.lock
+
+api/yarn.lock
+api/node_modules
