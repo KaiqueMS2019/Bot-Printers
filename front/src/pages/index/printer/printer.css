@@ -46,3 +46,10 @@
 .printer .button.ready{
     background-image: url('../../../assets/icons/ready-down-arrow.svg') !important;
 }
+
+.printer .button.error{
+    background-image: url('../../../assets/icons/error.svg') !important;
+    cursor:  not-allowed !important;
+    pointer-events: none !important;
+}
+

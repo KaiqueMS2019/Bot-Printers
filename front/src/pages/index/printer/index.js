@@ -14,8 +14,10 @@ const Printer = (props) => {
         indexUseCase.getPrinterReportUrl(printerIp)
         .then((payload) => {
             setDownloadUrl(payload)
+        }).catch(() => {
+            setDownloadUrl('error')
         })
-    } 
+    }
 
     const downloadReport = (printerIp) => {
         if(downloadUrl){
@@ -29,7 +31,7 @@ const Printer = (props) => {
         <div className="printer">
             <div className="icon"></div>
            <div className="name">{props.data.name} @ {props.data.ip}</div> 
-           <div className= {`button ${downloadUrl ? 'ready' : ''}`}
+           <div className= {`button ${(downloadUrl && downloadUrl !== 'error')  ? 'ready' : ''} ${(downloadUrl && downloadUrl === 'error') ? 'error' : ''}`}
             title={`Baixar relatório da impressora ${props.data.name} @ ${props.data.ip}`}
             onClick={()=>{downloadReport(props.data.ip)}}
             ></div>
