@@ -1,13 +1,13 @@
 import React from 'react'
 import './header.css'
+import appConfig from '../../../core/config'
 
 const Header = () => {
     return(
         <div id="header">
-            Bot Printers
+            {appConfig.appName}
         </div>
     )
-
 }
 
 export default Header
