@@ -20,11 +20,7 @@ const Printer = (props) => {
     }
 
     const downloadReport = (printerIp) => {
-        if(downloadUrl){
-            fileDownloader(downloadUrl, generateFileName(printerIp, 'jpeg'))
-        } else {
-            requestReport(printerIp)
-        }
+        downloadUrl ? fileDownloader(downloadUrl, generateFileName(printerIp, 'jpeg')) : requestReport(printerIp)
     }
 
     return(
