@@ -4,3 +4,4 @@ front/yarn.lock
 
 api/yarn.lock
 api/node_modules
+api/data/printers.json
