@@ -3,6 +3,7 @@ import './printer.css'
 import IndexUseCase from '../../../use-cases/index-page/index.use-case'
 import fileDownloader from '../../../helpers/fileDownloader'
 import generateFileName from '../../../helpers/generateFileName'
+import appConfig from '../../../core/config'
 
 const indexUseCase = IndexUseCase
 
@@ -20,7 +21,7 @@ const Printer = (props) => {
     }
 
     const downloadReport = (printerIp) => {
-        downloadUrl ? fileDownloader(downloadUrl, generateFileName(printerIp, 'jpeg')) : requestReport(printerIp)
+        downloadUrl ? fileDownloader(`${appConfig.apiBaseUrl}printers/${encodeURIComponent(downloadUrl)}.jpg/download`, generateFileName('kaique', 'jpeg')) : requestReport(printerIp)
     }
 
     return(

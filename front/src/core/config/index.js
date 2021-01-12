@@ -1,6 +1,8 @@
 const appConfig = {
     appName: 'Bot Printers',
-    useMocks: true,
+    useMocks: false,
+    apiBaseUrl: 'http://localhost:3000/'
 } 
+
 
 export default appConfig

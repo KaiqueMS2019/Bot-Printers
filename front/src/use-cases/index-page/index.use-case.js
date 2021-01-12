@@ -12,6 +12,10 @@ const IndexUseCase = {
 
     getPrinterReportUrl: async (printerIp) => {
         return indexService.getPrinterReportUrl(printerIp)
+    },
+
+    downloadReportFile: async (fileName) => {
+        return indexService.downloadReportFile(fileName)
     }
 }
 
