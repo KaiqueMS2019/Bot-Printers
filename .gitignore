@@ -6,6 +6,6 @@ front/debug.log
 api/yarn.lock
 api/node_modules
 api/data/printers.json
-api/screenshot
+api/screenshot/*
 api/yarn.lock
 api/debug.log
