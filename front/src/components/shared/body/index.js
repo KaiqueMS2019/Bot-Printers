@@ -12,6 +12,7 @@ const Body = () => {
         if(!printers.length){
             indexUseCase.loadAllPrinters()
             .then((payload) => {setPrinters(payload)})
+            .catch((err) => setPrinters('Error'))
         }
     })
 
@@ -24,7 +25,13 @@ const Body = () => {
                 </div>
             <div id="printers">
     
-            {printers.map(printer =>  <Printer data={printer}/>)}
+            { 
+                (printers !== 'Error') 
+                ? 
+                printers.map(printer =>  <Printer data={printer}/>)
+                :
+                <div id='printer-list-error'>Erro ao listar as impressoras</div>
+            }
 
            </div>
         </div>

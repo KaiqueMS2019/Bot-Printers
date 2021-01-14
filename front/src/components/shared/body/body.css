@@ -41,3 +41,13 @@
     padding: 1px;
     float: left;
 }
+
+#printer-list-error{
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    font-weight: bold;
+    line-height: 50px;
+    font-size: 30px;
+    color: #af0000;
+}

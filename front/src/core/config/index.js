@@ -1,7 +1,8 @@
 const appConfig = {
     appName: 'Bot Printers',
     useMocks: false,
-    apiBaseUrl: 'http://localhost:3000/'
+    apiBaseUrl: 'http://localhost:3000/',
+    enterPriseName: 'Unimed'
 } 
 
 

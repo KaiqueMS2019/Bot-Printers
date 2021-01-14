@@ -1,10 +1,12 @@
 const PrinterRepository = require('../repositories/printerRepository')
 const PrinterService = require('../services/printerService')
 
+
 const PrintersUseCase = {
 
     getListAllPrinters: () => {
-        return PrinterRepository.getAllPrinters()
+        let allPrinters = PrinterRepository.getAllPrinters()
+        return allPrinters
     },
 
     getPrinterScreenshot: async (ip) => {
@@ -12,7 +14,7 @@ const PrintersUseCase = {
         const printerScreenshotFileName = await PrinterService.getPrinterScreenshot(ip)
         return {
             fileName: printerScreenshotFileName
-        }
+        }  
     }
 
 }

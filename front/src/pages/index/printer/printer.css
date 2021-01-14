@@ -53,3 +53,8 @@
     pointer-events: none !important;
 }
 
+.printer .button.loading{
+    background-image: url('../../../assets/icons/loading.svg') !important;
+    cursor:  not-allowed !important;
+    pointer-events: none !important;
+}

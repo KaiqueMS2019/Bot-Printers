@@ -10,26 +10,35 @@ const indexUseCase = IndexUseCase
 const Printer = (props) => {
 
     const [downloadUrl, setDownloadUrl] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     const requestReport = (printerIp) => {
+        setIsLoading(true)
         indexUseCase.getPrinterReportUrl(printerIp)
         .then((payload) => {
             setDownloadUrl(payload)
         }).catch(() => {
             setDownloadUrl('error')
+        }).finally(() => {
+            setIsLoading(false)
         })
     }
 
     const downloadReport = (printerIp) => {
-        downloadUrl ? fileDownloader(`${appConfig.apiBaseUrl}printers/${encodeURIComponent(downloadUrl)}.jpg/download`, generateFileName('kaique', 'jpeg')) : requestReport(printerIp)
+        downloadUrl ? indexUseCase.downloadReportFile(downloadUrl)  : requestReport(printerIp)
     }
 
     return(
-        <div className="printer">
+        <div className="printer"  title={`Impressora ${props.data.name} @ ${props.data.ip}`}>
             <div className="icon"></div>
-           <div className="name">{props.data.name} @ {props.data.ip}</div> 
-           <div className= {`button ${(downloadUrl && downloadUrl !== 'error')  ? 'ready' : ''} ${(downloadUrl && downloadUrl === 'error') ? 'error' : ''}`}
-            title={`Baixar relatório da impressora ${props.data.name} @ ${props.data.ip}`}
+           <div className="name">{props.data.name}</div> 
+           <div className= {
+               `button 
+                ${(!isLoading && downloadUrl && downloadUrl !== 'error')  ? 'ready' : ''} 
+                ${(!isLoading && downloadUrl && downloadUrl === 'error') ? 'error' : ''}
+                ${(isLoading ? 'loading' : '')}
+               `
+            }
             onClick={()=>{downloadReport(props.data.ip)}}
             ></div>
 

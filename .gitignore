@@ -1,7 +1,11 @@
 front/node_modules/
 front/.eslintcache
 front/yarn.lock
+front/debug.log
 
 api/yarn.lock
 api/node_modules
 api/data/printers.json
+api/screenshot
+api/yarn.lock
+api/debug.log
