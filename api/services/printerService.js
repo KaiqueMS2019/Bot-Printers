@@ -1,8 +1,15 @@
 const puppeteer = require('puppeteer');
 const uuid = require('uuid')
+const fs = require('fs')
 
 const PrinterService = {
      getPrinterScreenshot: async (printerIp) => {
+
+        const defaultScreenshootFolder = './screenshot'
+
+        const folderExists = fs.existsSync(defaultScreenshootFolder)
+        if(!folderExists) fs.mkdirSync(defaultScreenshootFolder)
+        
         console.log(`PrinterService :: getPrinterScreenshot :: ${printerIp}`)
         let browser = await puppeteer.launch({ headless: true });
         let page = await browser.newPage();
