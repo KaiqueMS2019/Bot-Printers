@@ -15,6 +15,21 @@ const PrintersUseCase = {
         return {
             fileName: printerScreenshotFileName
         }  
+    },
+
+    getBulkPrintersScreenshot: async (currentPrinter) => {
+        currentPrinter = parseInt(currentPrinter)
+        const countPrinters = PrinterRepository.getAllPrinters().length
+        const finish = (currentPrinter == countPrinters)
+
+        return {
+            totalPrinters: countPrinters,
+            currentPrinter,
+            finish
+
+        } 
+        
+
     }
 
 }

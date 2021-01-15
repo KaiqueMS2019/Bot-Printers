@@ -13,6 +13,14 @@ PrintersRoute.get('/', (req, res, next) => {
     }
 })
 
+PrintersRoute.get('/all', async (req,res, next) => {
+
+    const currentPrinter = req.query.currentPrinter
+    const bulkPrinters = await PrintersUseCase.getBulkPrintersScreenshot(currentPrinter)
+    res.send(bulkPrinters)
+
+})
+
 PrintersRoute.get('/:ip', async (req, res, next) => {
     try {
         console.log(`PrintersRoute :: get :: /:ip :: ${JSON.stringify(req.params)}`)
@@ -33,6 +41,7 @@ PrintersRoute.get('/:fileName/download', (req, res, next) => {
         res.status(400)
         res.send(Errors.cannotDownloadThisFile)
    }
+
 })
 
 module.exports = PrintersRoute
