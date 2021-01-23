@@ -1,38 +1,29 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import './printer.css'
 import IndexUseCase from '../../../use-cases/index-page/index.use-case'
-import { useStatusDownload } from '../../../hooks/StatusDownload';
-
 
 const indexUseCase = IndexUseCase
 
 const Printer = (props) => {
 
-    const { statusDownload, setStatusDownload } = useStatusDownload();
-
     const [downloadUrl, setDownloadUrl] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
-    const updateDownload = useCallback(() => {
-        setStatusDownload(statusDownload + 1);
-    },[setStatusDownload, statusDownload])
-    const requestReport = useCallback(async (printerIp) => {
+    const requestReport = (printerIp) => {
         setIsLoading(true)
-        await indexUseCase.getPrinterReportUrl(printerIp)
+        indexUseCase.getPrinterReportUrl(printerIp)
         .then((payload) => {
             setDownloadUrl(payload)
-            updateDownload();
         }).catch(() => {
             setDownloadUrl('error')
         }).finally(() => {
             setIsLoading(false)
         })
-    },[updateDownload])
+    }
 
-
-    const downloadReport = useCallback((printerIp) => {
+    const downloadReport = (printerIp) => {
         downloadUrl ? indexUseCase.downloadReportFile(downloadUrl)  : requestReport(printerIp)
-    },[downloadUrl, requestReport]);
+    }
 
     return(
         <div className="printer"  title={`Impressora ${props.data.name} @ ${props.data.ip}`}>
