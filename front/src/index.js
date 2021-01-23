@@ -2,16 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Index from './pages/index/index.page';
 import reportWebVitals from './reportWebVitals';
-import StatusDownloadProvider from './hooks/StatusDownload';
 import './index.css'
 import './normalize.css'
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <StatusDownloadProvider>
-        <Index />
-    </StatusDownloadProvider>
+    <Index />
   </React.StrictMode>,
   document.getElementById('root')
 );
