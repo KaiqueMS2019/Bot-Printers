@@ -20,9 +20,16 @@ const Body = () => {
         <div id="body">
             <div id="body-title">
                 Printers
-                <div id="btn-download-down"
-                title="Baixar todos os relatórios">Baixar Todos</div>
-                </div>
+                {/* <div id="btn-download-down"
+                    title="Baixar todos os relatórios">Baixar Todos</div>*/}
+                     <div id="loading-bar-outside">
+                        <div id="loading-bar-inside"></div>
+                        <div id="loading-bar-text">1/{printers.length}</div>
+                     </div>
+                </div> 
+
+               
+
             <div id="printers">
     
             { 

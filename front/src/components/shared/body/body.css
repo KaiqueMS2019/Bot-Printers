@@ -33,6 +33,37 @@
     opacity: 0.7;
 }
 
+#loading-bar-outside{
+    float: right;
+    background-color: #bdbdbd;
+    height: 30px;
+    margin: 10px;
+    font-size: 15px;
+    line-height: 30px;
+    width: 200px;
+    position: relative;
+    border-radius: 5px;
+}
+
+#loading-bar-inside{
+    float: left;
+    height: 100%;
+    position: relative;
+    border-radius: 5px;
+    background-color: #00ff60;
+}
+
+#loading-bar-text{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #4d4d4d;
+    background-color: transparent;
+}
+
 #printers{
     width: 100%;
     height: calc(100vh - 100px);
