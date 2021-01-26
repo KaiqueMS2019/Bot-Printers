@@ -1,6 +1,7 @@
 const PrinterRepository = require('../repositories/printerRepository')
 const PrinterService = require('../services/printerService')
 const fs = require('fs')
+const { CLIENT_RENEG_LIMIT } = require('tls')
 
 
 const PrintersUseCase = {
@@ -24,19 +25,25 @@ const PrintersUseCase = {
         const finish = (currentPrinter == countPrinters)
         const tmpFiles = fs.readdirSync('screenshot/tmp')
         const tmpFilesQuantity = tmpFiles.length
-        console.log(tmpFilesQuantity)
-
-        return {
+        let finishPrinter = (currentPrinter === countPrinters) 
+        let nextPrinter = finishPrinter ? null : (currentPrinter+1)
+        let fileUrls = finishPrinter ? "google.com" : null
+        const firstPrinter = 1
+        if(tmpFilesQuantity && currentPrinter === firstPrinter)
+        {
+            tmpFiles.map(fileName => { 
+                fs.unlinkSync(`./screenshot/tmp/${fileName}`)
+            }) 
+        }
+        let responseObject = {
             totalPrinters: countPrinters,
-            nextPrinter: (currentPrinter+1),
+            nextPrinter,
+            fileUrls,
             currentPrinter,
             finish
-
-        } 
-        
-
+        }
+        return responseObject
     }
-
 }
 
 module.exports = PrintersUseCase
