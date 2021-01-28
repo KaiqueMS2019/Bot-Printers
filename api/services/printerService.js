@@ -3,7 +3,7 @@ const uuid = require('uuid')
 const fs = require('fs')
 
 const PrinterService = {
-     getPrinterScreenshot: async (printerIp) => {
+     getPrinterScreenshot: async (printerIp, tmp = false) => {
 
         const defaultScreenshootFolder = './screenshot'
 
@@ -16,8 +16,9 @@ const PrinterService = {
         await page.goto(printerIp, { waitUntil: "networkidle0", timeout: 60000 });
         await page.setViewport({ width: 1024, height: 800 });
         const fileName = uuid.v4()
+        const filePath = (tmp) ? `./screenshot/tmp/${fileName}.jpg` : `./screenshot/${fileName}.jpg`
         await page.screenshot({
-            path: `./screenshot/${fileName}.jpg`,
+            path: filePath,
             type: "jpeg",
         });
         await page.close();

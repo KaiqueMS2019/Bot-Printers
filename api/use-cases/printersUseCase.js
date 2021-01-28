@@ -1,8 +1,7 @@
 const PrinterRepository = require('../repositories/printerRepository')
 const PrinterService = require('../services/printerService')
+const generateZipFromFolder = require('../helpers/generateZipFolder')
 const fs = require('fs')
-const { CLIENT_RENEG_LIMIT } = require('tls')
-
 
 const PrintersUseCase = {
 
@@ -21,24 +20,34 @@ const PrintersUseCase = {
 
     getBulkPrintersScreenshot: async (currentPrinter) => {
         currentPrinter = parseInt(currentPrinter)
-        const countPrinters = PrinterRepository.getAllPrinters().length
+        const allPrinters = PrinterRepository.getAllPrinters()
+        const countPrinters = allPrinters.length
         const finish = (currentPrinter == countPrinters)
-        const tmpFiles = fs.readdirSync('screenshot/tmp')
+        let tmpFiles = fs.readdirSync('screenshot/tmp')
         const tmpFilesQuantity = tmpFiles.length
+        const firstPrinter = 1
+
         let finishPrinter = (currentPrinter === countPrinters) 
         let nextPrinter = finishPrinter ? null : (currentPrinter+1)
-        let fileUrls = finishPrinter ? "google.com" : null
-        const firstPrinter = 1
-        if(tmpFilesQuantity && currentPrinter === firstPrinter)
-        {
+        if(tmpFilesQuantity && currentPrinter === firstPrinter){
             tmpFiles.map(fileName => { 
                 fs.unlinkSync(`./screenshot/tmp/${fileName}`)
-            }) 
+            })  
         }
+
+        await PrinterService.getPrinterScreenshot(allPrinters[(currentPrinter-1)].ip, true)
+
+        if(finishPrinter){
+           tmpFiles = fs.readdirSync('screenshot/tmp')
+            await generateZipFromFolder()
+            tmpFiles.map(fileName => { 
+                fs.unlinkSync(`./screenshot/tmp/${fileName}`)
+            })  
+        }
+
         let responseObject = {
             totalPrinters: countPrinters,
             nextPrinter,
-            fileUrls,
             currentPrinter,
             finish
         }
