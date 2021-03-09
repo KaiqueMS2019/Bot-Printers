@@ -48,9 +48,11 @@
 #loading-bar-inside{
     float: left;
     height: 100%;
-    position: relative;
+    width: 0%;
+    position: absolute;
     border-radius: 5px;
     background-color: #00ff60;
+    transition: width 1s ease-in-out ;
 }
 
 #loading-bar-text{

@@ -11,36 +11,36 @@ const Body = () => {
     const [currentPrinterState, setCurrentPrinterState] = useState(1)
 
     const recursivePrintDownload = async (currentPrinter) => {
-     return await axios.get(`http://localhost:3000/printers/all?currentPrinter=${currentPrinter}`)
+        return await axios.get(`http://localhost:3000/printers/all?currentPrinter=${currentPrinter}`)
     }
 
     const downloadAllPrinters = async (currentPrinter = 1) => {
         console.log(currentPrinter)
-       try {
-        const response = await recursivePrintDownload(currentPrinter)
-        const responseData = response.data
-        const hasFinished = responseData.finish
-        
-        if(hasFinished){
-            alert("acabou")
-            return false
-        }
+        try {
+            const response = await recursivePrintDownload(currentPrinter)
+            const responseData = response.data
+            const hasFinished = responseData.finish
 
-        currentPrinter ++
-        setCurrentPrinterState(currentPrinter)
-        await downloadAllPrinters(currentPrinter)
-        console.log(response)
-       } catch (error) {
-           console.log(error)
-       } 
+            if (hasFinished) {
+                alert("acabou")
+                return false
+            }
+
+            currentPrinter++
+            setCurrentPrinterState(currentPrinter)
+            await downloadAllPrinters(currentPrinter)
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
-        if(!printers.length){
+        if (!printers.length) {
             downloadAllPrinters()
             indexUseCase.loadAllPrinters()
-            .then((payload) => {setPrinters(payload)})
-            .catch((err) => setPrinters('Error'))
+                .then((payload) => { setPrinters(payload) })
+                .catch((err) => setPrinters('Error'))
         }
     })
 
@@ -50,25 +50,27 @@ const Body = () => {
                 Printers
                 {/* <div id="btn-download-down"
                     title="Baixar todos os relatórios">Baixar Todos</div>*/}
-                     <div id="loading-bar-outside">
-                        <div id="loading-bar-inside"></div>
-                        <div id="loading-bar-text">{currentPrinterState}/{printers.length}</div>
-                     </div>
-                </div> 
+                <div id="loading-bar-outside">
+                    <div id="loading-bar-inside" style={{
+                        width: `calc(${currentPrinterState}*100% /${printers.length})`
+                    }}></div>
+                    <div id="loading-bar-text" >{currentPrinterState}/{printers.length}</div>
+                </div>
+            </div>
 
-               
+
 
             <div id="printers">
-    
-            { 
-                (printers !== 'Error') 
-                ? 
-                printers.map(printer =>  <Printer data={printer}/>)
-                :
-                <div id='printer-list-error'>Erro ao listar as impressoras</div>
-            }
 
-           </div>
+                {
+                    (printers !== 'Error')
+                        ?
+                        printers.map(printer => <Printer data={printer} />)
+                        :
+                        <div id='printer-list-error'>Erro ao listar as impressoras</div>
+                }
+
+            </div>
         </div>
     )
 }
