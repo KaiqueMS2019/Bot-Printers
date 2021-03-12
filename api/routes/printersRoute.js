@@ -13,7 +13,7 @@ PrintersRoute.get('/', (req, res, next) => {
     }
 })
 
-PrintersRoute.get('/all', async (req,res, next) => {
+PrintersRoute.get('/all', async (req, res, next) => {
 
     const currentPrinter = req.query.currentPrinter
     const bulkPrinters = await PrintersUseCase.getBulkPrintersScreenshot(currentPrinter)
@@ -32,16 +32,29 @@ PrintersRoute.get('/:ip', async (req, res, next) => {
     }
 })
 
-PrintersRoute.get('/:fileName/download', (req, res, next) => {
-   try {
-        const fileName = (req.params.fileName) 
-        const file = `${__dirname}/../screenshot/${fileName}`
+PrintersRoute.get('/zip/file', (req, res, next) => {
+    try {
+        const file = `${__dirname}/../screenshot/output/Printers.zip`
         res.download(file)
-   } catch (error) {
+    } catch (error) {
         res.status(400)
         res.send(Errors.cannotDownloadThisFile)
-   }
+    }
 
 })
+
+
+PrintersRoute.get('/:fileName/download', (req, res, next) => {
+    try {
+        const fileName = (req.params.fileName)
+        const file = `${__dirname}/../screenshot/${fileName}`
+        res.download(file)
+    } catch (error) {
+        res.status(400)
+        res.send(Errors.cannotDownloadThisFile)
+    }
+
+})
+
 
 module.exports = PrintersRoute

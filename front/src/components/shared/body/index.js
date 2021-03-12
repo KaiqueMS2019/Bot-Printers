@@ -3,26 +3,43 @@ import './body.css'
 import Printer from '../../../pages/index/printer'
 import IndexUseCase from '../../../use-cases/index-page/index.use-case'
 import axios from 'axios'
+import fileDownloader from '../../../helpers/fileDownloader'
+
+const BUTON_STATES = {
+    DOWNLOAD: 1,
+    DOWNLOADING: 2,
+    FINISHED: 3
+}
 
 const Body = () => {
 
     const indexUseCase = IndexUseCase
     const [printers, setPrinters] = useState([])
+    const [butonState, setButonState] = useState(BUTON_STATES.DOWNLOAD)
     const [currentPrinterState, setCurrentPrinterState] = useState(1)
 
     const recursivePrintDownload = async (currentPrinter) => {
         return await axios.get(`http://localhost:3000/printers/all?currentPrinter=${currentPrinter}`)
     }
 
+    const downloadZipFile = async () => {
+        return  fileDownloader(`http://localhost:3000/printers/zip/file`, 'Printers.zip')
+         
+    }
+    
     const downloadAllPrinters = async (currentPrinter = 1) => {
         console.log(currentPrinter)
+       if(currentPrinter === 1){
+           
+           setButonState(BUTON_STATES.DOWNLOADING)
+       }
         try {
             const response = await recursivePrintDownload(currentPrinter)
             const responseData = response.data
             const hasFinished = responseData.finish
 
             if (hasFinished) {
-                alert("acabou")
+                setButonState(BUTON_STATES.FINISHED)
                 return false
             }
 
@@ -37,7 +54,6 @@ const Body = () => {
 
     useEffect(() => {
         if (!printers.length) {
-            downloadAllPrinters()
             indexUseCase.loadAllPrinters()
                 .then((payload) => { setPrinters(payload) })
                 .catch((err) => setPrinters('Error'))
@@ -48,14 +64,23 @@ const Body = () => {
         <div id="body">
             <div id="body-title">
                 Printers
-                {/* <div id="btn-download-down"
-                    title="Baixar todos os relatórios">Baixar Todos</div>*/}
-                <div id="loading-bar-outside">
-                    <div id="loading-bar-inside" style={{
-                        width: `calc(${currentPrinterState}*100% /${printers.length})`
-                    }}></div>
-                    <div id="loading-bar-text" >{currentPrinterState}/{printers.length}</div>
-                </div>
+                {
+                    (butonState === BUTON_STATES.DOWNLOAD) && <div onClick={() => {downloadAllPrinters()} }   id="btn-download-down"
+                        title="Baixar todos os relatórios">Baixar Todos</div>
+                }
+                {
+                    (butonState === BUTON_STATES.DOWNLOADING) && <div id="loading-bar-outside">
+                        <div id="loading-bar-inside" style={{
+                            width: `calc(${currentPrinterState}*100% /${printers.length})`
+                        }}></div>
+                        <div id="loading-bar-text" >{currentPrinterState}/{printers.length}</div>
+                    </div>
+                }
+                {
+                    (butonState === BUTON_STATES.FINISHED) && <div onClick={() => {downloadZipFile()} }   id="btn-download-down"
+                        title="Baixar todos os relatórios">Baixar Arquivo</div>
+                }
+
             </div>
 
 
