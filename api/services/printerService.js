@@ -17,7 +17,7 @@ const PrinterService = {
         await page.setViewport({ width: 1024, height: 800 });
         const fileName = uuid.v4()
         const filePath = (tmp) ? `./screenshot/tmp/${fileName}.jpg` : `./screenshot/${fileName}.jpg`
-        await page.screenshot({
+        await page.pdf({
             path: filePath,
             type: "jpeg",
         });

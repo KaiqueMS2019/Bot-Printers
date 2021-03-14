@@ -77,7 +77,7 @@ const Body = () => {
                     </div>
                 }
                 {
-                    (butonState === BUTON_STATES.FINISHED) && <div onClick={() => {downloadZipFile()} }   id="btn-download-down"
+                    (butonState === BUTON_STATES.FINISHED) && <div onClick={() => {downloadZipFile()} }   id="downloadZip"
                         title="Baixar todos os relatórios">Baixar Arquivo</div>
                 }
 
